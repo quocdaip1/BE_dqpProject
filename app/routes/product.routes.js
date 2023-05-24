@@ -33,4 +33,10 @@ module.exports = function (app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.remove
   );
+
+  app.get(
+    "/api/dashboard",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.dashboard
+  );
 };
