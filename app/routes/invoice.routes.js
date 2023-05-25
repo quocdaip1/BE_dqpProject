@@ -12,8 +12,7 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/invoices/", controller.findAll);
-
+  app.get("/api/invoices/", [authJwt.verifyToken, isAdmin], controller.findAll);
   app.post("/api/invoices", [authJwt.verifyToken], controller.create);
 
   app.get("/api/invoices/:id", controller.findById);

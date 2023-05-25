@@ -52,8 +52,8 @@ exports.signin = async (req, res) => {
     });
     if (!user) {
       return res
-        .status(404)
-        .json(responsePayload(true, "Người dùng này không tồn tại!", null));
+        .status(400)
+        .json(responsePayload(false, "Người dùng này không tồn tại!", null));
     }
 
     let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);

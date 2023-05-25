@@ -6,7 +6,9 @@ const config = require("./app/config/config.js");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "http://127.0.0.1:5173",
+  // Allow follow-up middleware to override this CORS for options
+  preflightContinue: true,
 };
 
 app.use(cors(corsOptions));
@@ -47,7 +49,7 @@ async function initial() {
     where: { id: "82705bfa-cede-46e4-afca-5541b6068671" },
     defaults: {
       name: "Admin",
-      roleCode: "admin"
+      roleCode: "admin",
     },
   });
 
@@ -55,7 +57,7 @@ async function initial() {
     where: { id: "37dcfe4d-c74a-469b-9a25-61961e568ce1" },
     defaults: {
       name: "User",
-      roleCode: "user"
+      roleCode: "user",
     },
   });
 }
