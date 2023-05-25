@@ -13,8 +13,9 @@ responsePayload = (status, message, payload) => ({
 exports.findAll = async (req, res) => {
   try {
     let query = {
-      status: req.query.status || "active",
+      
     };
+    if (req.query.status) query.status = req.query.status
     if (req.query.keyword)
       query[Op.or] = [
         { firstname: { [Op.like]: `%${req.query.keyword}%` } },
@@ -24,7 +25,7 @@ exports.findAll = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = page * limit;
     const total = await User.findAll({ where: query });
-    const totalPage = Math.round(total.length / limit);
+    const totalPage = Math.ceil(total.length / limit);
     const users = await User.findAll({
       where: query,
       include: Role,
