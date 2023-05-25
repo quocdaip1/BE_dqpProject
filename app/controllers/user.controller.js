@@ -54,7 +54,6 @@ exports.findById = async (req, res) => {
       return res
         .status(400)
         .json(responsePayload(false, "Đường dẫn thiêú id người dùng!", null));
-    console.log(req.params.id);
     const user = await User.findOne({
       where: {
         [Op.and]: [{ status: "active", id: req.params.id }],
