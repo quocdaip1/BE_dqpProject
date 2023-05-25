@@ -1,5 +1,6 @@
 const db = require("../models");
 const Product = db.product;
+const InvoiceItems = db.invoiceItem;
 const { Op } = require("sequelize");
 
 responsePayload = (status, message, payload) => ({
@@ -184,4 +185,38 @@ exports.remove = async (req, res) => {
   //     subCategoryCode: req.body.subCategoryCode,
   //   },
   // });
+};
+
+exports.dashboard = async (req, res) => {
+  try {
+    let query = {
+      status: req.query.status || "active",
+    };
+    const products = await Product.findAll({
+      where: query,
+      include: InvoiceItems,
+      order: [["name", "ASC"]],
+    });
+
+    let payload = [];
+    products.map((product) => {
+      let total = 0;
+      product.invoiceItems.map((item) => {
+        total += item.total;
+      });
+      payload.push({ name: `${product.name}${product.code}`, total });
+    });
+    payload = payload.sort((a, b) => parseFloat(a.total) - parseFloat(b.total));
+    payload = payload.slice(0, 10);
+
+    res.json(
+      responsePayload(
+        true,
+        "Tải top 10 danh sách sản phẩm bán chạy thành công!",
+        payload
+      )
+    );
+  } catch (err) {
+    res.status(500).json(responsePayload(false, err.message, null));
+  }
 };
