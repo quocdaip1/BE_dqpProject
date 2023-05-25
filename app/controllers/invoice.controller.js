@@ -19,7 +19,7 @@ exports.findAll = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = page * limit;
     const total = await Invoice.findAll({ where: query });
-    const totalPage = Math.round(total.length / limit);
+    const totalPage = Math.ceil(total.length / limit);
     const invoices = await Invoice.findAll({
       where: query,
       order,

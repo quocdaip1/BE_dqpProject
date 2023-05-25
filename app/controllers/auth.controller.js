@@ -25,6 +25,9 @@ exports.signup = async (req, res) => {
     const user = await User.create({
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phonenumber: req.body.phonenumber,
     });
     await user.setRole(role);
     res.json(

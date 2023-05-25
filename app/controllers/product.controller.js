@@ -36,7 +36,7 @@ exports.findAll = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = page * limit;
     const total = await Product.findAll({ where: query });
-    const totalPage = Math.round(total.length / limit);
+    const totalPage = Math.ceil(total.length / limit);
     const products = await Product.findAll({
       where: query,
       limit,
@@ -178,10 +178,10 @@ exports.remove = async (req, res) => {
   } catch (err) {
     res.status(500).json(responsePayload(false, err.message, null));
   }
-  const productByCategory = await Product.findAll({
-    where: {
-      categoryCode: req.body.categoryCode,
-      subCategoryCode: req.body.subCategoryCode,
-    },
-  });
+  // const productByCategory = await Product.findAll({
+  //   where: {
+  //     categoryCode: req.body.categoryCode,
+  //     subCategoryCode: req.body.subCategoryCode,
+  //   },
+  // });
 };
