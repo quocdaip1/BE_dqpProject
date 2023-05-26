@@ -25,6 +25,7 @@ exports.findAll = async (req, res) => {
       order,
       limit,
       offset,
+      include: [{ model: InvoiceItem, include: Product }, { model: User }],
     });
     res.json(
       responsePayload(true, "Tải danh sách hoá đơn thành công!", {
