@@ -1,7 +1,9 @@
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
+const Product = db.product;
 const Invoice = db.invoice;
+const InvoiceItem = db.invoiceItem;
 const { Op } = require("sequelize");
 
 responsePayload = (status, message, payload) => ({
@@ -58,7 +60,7 @@ exports.findById = async (req, res) => {
       where: {
         [Op.and]: [{ status: "active", id: req.params.id }],
       },
-      include: [{ model: Invoice }, { model: Role }],
+      include: [{ model: Invoice, include: [{ model: InvoiceItem, include: Product }, { model: User }] }, { model: Role }],
     });
     if (!user)
       return res.json(
