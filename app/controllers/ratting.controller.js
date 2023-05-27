@@ -92,7 +92,7 @@ exports.dashboard = async (req, res) => {
 
     const results = [];
     payload.map((item) => {
-      results.push({ name: `${item.name}${item.code}`, total: item.rate });
+      results.push({ name: `${item.name}-${item.code}`, total: item.rate });
     });
 
     res.json(

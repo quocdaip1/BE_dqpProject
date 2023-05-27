@@ -204,7 +204,7 @@ exports.dashboard = async (req, res) => {
         if (item.invoice.status === "accepted") total += item.total;
       });
       if (total)
-        payload.push({ name: `${product.name}${product.code}`, total });
+        payload.push({ name: `${product.name}-${product.code}`, total });
     });
     payload = payload.sort((a, b) => parseFloat(a.total) - parseFloat(b.total));
     payload = payload.slice(0, 10);
