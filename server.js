@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const bcrypt = require("bcryptjs");
 const config = require("./app/config/config.js");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // database
 const db = require("./app/models");
 const Role = db.role;
+const User = db.user;
 
 db.sequelize.sync().then(() => {
   initial(); // Just use it in development, at the first time execution!. Delete it in production
@@ -37,6 +39,7 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/product.routes")(app);
 require("./app/routes/invoice.routes")(app);
+require("./app/routes/ratting.routes")(app);
 
 // set port, listen for requests
 const PORT = config.PORT;
@@ -58,6 +61,18 @@ async function initial() {
     defaults: {
       name: "User",
       roleCode: "user",
+    },
+  });
+
+  await User.findOrCreate({
+    where: { email: "admin@gmail.com" },
+    defaults: {
+      email: "admin@gmail.com",
+      firstName: "Admin",
+      lastName: "Project",
+      password: bcrypt.hashSync("123456", 8),
+      phonenumber: "123456789",
+      roleId: "82705bfa-cede-46e4-afca-5541b6068671",
     },
   });
 }

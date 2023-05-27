@@ -52,6 +52,11 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      rate: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        default: 0,
+      },
       status: {
         type: DataTypes.STRING,
         defaultValue: "active",

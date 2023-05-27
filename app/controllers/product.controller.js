@@ -1,6 +1,9 @@
 const db = require("../models");
 const Product = db.product;
 const InvoiceItems = db.invoiceItem;
+const Invoice = db.invoice;
+const Ratting = db.ratting;
+const User = db.user;
 const { Op } = require("sequelize");
 
 responsePayload = (status, message, payload) => ({
@@ -70,6 +73,7 @@ exports.findById = async (req, res) => {
       where: {
         code: req.params.id,
         status: { [Op.ne]: "removed" },
+        include: [{ model: Ratting, include: User }],
       },
     });
     if (!product)
@@ -138,7 +142,7 @@ exports.create = async (req, res) => {
     });
     const product = await Product.create({
       ...req.body,
-      code: `${req.body.categoryCode}-${req.body.subCategoryCode}-${
+      code: `${req.body.categoryCode}${req.body.subCategoryCode}${
         productByCategory.length + 1
       }`,
     });
@@ -146,12 +150,6 @@ exports.create = async (req, res) => {
   } catch (err) {
     res.status(500).json(responsePayload(false, err.message, null));
   }
-  const productByCategory = await Product.findAll({
-    where: {
-      categoryCode: req.body.categoryCode,
-      subCategoryCode: req.body.subCategoryCode,
-    },
-  });
 };
 
 exports.remove = async (req, res) => {
@@ -194,17 +192,18 @@ exports.dashboard = async (req, res) => {
     };
     const products = await Product.findAll({
       where: query,
-      include: InvoiceItems,
       order: [["name", "ASC"]],
+      include: [{ model: InvoiceItems, include: Invoice }],
     });
 
     let payload = [];
     products.map((product) => {
       let total = 0;
       product.invoiceItems.map((item) => {
-        total += item.total;
+        if (item.invoice.status === "accepted") total += item.total;
       });
-      payload.push({ name: `${product.name}${product.code}`, total });
+      if (total)
+        payload.push({ name: `${product.name}${product.code}`, total });
     });
     payload = payload.sort((a, b) => parseFloat(a.total) - parseFloat(b.total));
     payload = payload.slice(0, 10);
