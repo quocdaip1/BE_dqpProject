@@ -46,6 +46,7 @@ exports.findAll = async (req, res) => {
       limit,
       offset,
       order,
+      include: [{ model: Ratting, include: User }],
     });
     res.json(
       responsePayload(true, "Tải danh sách sản phẩm thành công!", {
