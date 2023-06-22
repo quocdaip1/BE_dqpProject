@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -r dotenv/config server.js"
+    "dev": "nodemon -r dotenv/config server.js",
+    "start": "node server.js"
   },
   "keywords": [
     "rest",
@@ -28,5 +29,14 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0"
-  }
+  },
+  "description": "## Installation",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HuuPhucDang/Freelancer_DQP_BE.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HuuPhucDang/Freelancer_DQP_BE/issues"
+  },
+  "homepage": "https://github.com/HuuPhucDang/Freelancer_DQP_BE#readme"
 }
