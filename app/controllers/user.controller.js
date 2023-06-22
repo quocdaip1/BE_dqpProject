@@ -4,6 +4,7 @@ const Role = db.role;
 const Product = db.product;
 const Invoice = db.invoice;
 const InvoiceItem = db.invoiceItem;
+const SavedProduct = db.savedProduct;
 const { Op } = require("sequelize");
 
 responsePayload = (status, message, payload) => ({
@@ -14,10 +15,8 @@ responsePayload = (status, message, payload) => ({
 
 exports.findAll = async (req, res) => {
   try {
-    let query = {
-      
-    };
-    if (req.query.status) query.status = req.query.status
+    let query = {};
+    if (req.query.status) query.status = req.query.status;
     if (req.query.keyword)
       query[Op.or] = [
         { firstname: { [Op.like]: `%${req.query.keyword}%` } },
@@ -60,7 +59,14 @@ exports.findById = async (req, res) => {
       where: {
         [Op.and]: [{ status: "active", id: req.params.id }],
       },
-      include: [{ model: Invoice, include: [{ model: InvoiceItem, include: Product }, { model: User }] }, { model: Role }],
+      include: [
+        {
+          model: Invoice,
+          include: [{ model: InvoiceItem, include: Product }, { model: User }],
+        },
+        { model: Role },
+        { model: SavedProduct, include: [{ model: Product }] },
+      ],
     });
     if (!user)
       return res.json(

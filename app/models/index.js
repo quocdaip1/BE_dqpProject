@@ -35,6 +35,7 @@ db.invoice = require("./invoice.model.js")(sequelize, Sequelize, DataTypes);
 db.user = require("./user.model.js")(sequelize, Sequelize, DataTypes);
 db.role = require("./role.model.js")(sequelize, Sequelize, DataTypes);
 db.ratting = require("./ratting.model.js")(sequelize, Sequelize, DataTypes);
+db.savedProduct = require("./savedProduct.model.js")(sequelize, Sequelize, DataTypes);
 
 db.role.hasMany(db.user);
 db.user.belongsTo(db.role);
@@ -48,6 +49,10 @@ db.product.hasMany(db.ratting);
 db.ratting.belongsTo(db.product);
 db.user.hasMany(db.ratting);
 db.ratting.belongsTo(db.user);
+db.user.hasMany(db.savedProduct);
+db.savedProduct.belongsTo(db.user);
+db.product.hasMany(db.savedProduct);
+db.savedProduct.belongsTo(db.product);
 
 
 db.ROLES = ["user", "admin"];
