@@ -33,6 +33,7 @@ db.invoiceItem = require("./invoiceItem.model.js")(
 );
 db.invoice = require("./invoice.model.js")(sequelize, Sequelize, DataTypes);
 db.user = require("./user.model.js")(sequelize, Sequelize, DataTypes);
+db.category = require("./category.model.js")(sequelize, Sequelize, DataTypes);
 db.role = require("./role.model.js")(sequelize, Sequelize, DataTypes);
 db.ratting = require("./ratting.model.js")(sequelize, Sequelize, DataTypes);
 db.savedProduct = require("./savedProduct.model.js")(sequelize, Sequelize, DataTypes);
