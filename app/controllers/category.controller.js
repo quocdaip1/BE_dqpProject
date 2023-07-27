@@ -73,6 +73,7 @@ exports.findAllNoPage = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 exports.findAllParent = async (req, res) => {
   try {
     const categories = await Category.findAll({
@@ -103,6 +104,10 @@ exports.create = async (req, res) => {
       req.body.parent = null;
     }
 
+=======
+exports.create = async (req, res) => {
+  try {
+>>>>>>> 80f8b0514cb94e9f031268b3e608cbb868119eee
     const category = await Category.create(req.body);
     res.json(responsePayload(true, "Tạo danh mục thành công!", category));
   } catch (err) {

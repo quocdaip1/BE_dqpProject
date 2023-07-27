@@ -12,8 +12,11 @@ module.exports = function (app) {
 
   app.get("/api/categories/nopage/", controller.findAllNoPage);
 
+<<<<<<< HEAD
   app.get("/api/categories/parent/", controller.findAllParent);
 
+=======
+>>>>>>> 80f8b0514cb94e9f031268b3e608cbb868119eee
   app.post("/api/categories", controller.create);
 
   app.get("/api/categories/:id", controller.findById);
