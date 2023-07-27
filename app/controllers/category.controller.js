@@ -73,6 +73,10 @@ exports.findAllNoPage = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 998b70607e1804ccfb79c607a1f743f553e4661e
 exports.findAllParent = async (req, res) => {
   try {
     const categories = await Category.findAll({
@@ -103,6 +107,13 @@ exports.create = async (req, res) => {
       req.body.parent = null;
     }
 
+<<<<<<< HEAD
+=======
+=======
+exports.create = async (req, res) => {
+  try {
+>>>>>>> 80f8b0514cb94e9f031268b3e608cbb868119eee
+>>>>>>> 998b70607e1804ccfb79c607a1f743f553e4661e
     const category = await Category.create(req.body);
     res.json(responsePayload(true, "Tạo danh mục thành công!", category));
   } catch (err) {
