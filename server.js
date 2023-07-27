@@ -7,7 +7,7 @@ const config = require("./app/config/config.js");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "http://127.0.0.1:5173",
   // Allow follow-up middleware to override this CORS for options
   preflightContinue: true,
 };
@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 // api routes
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/category.routes")(app);
 require("./app/routes/product.routes")(app);
 require("./app/routes/invoice.routes")(app);
 require("./app/routes/ratting.routes")(app);

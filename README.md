@@ -11,3 +11,5 @@ run: yarn global add nodemon
 !! Add information of Database to file .env 
 run: yarn dev
 ```
+
+SOUCE FRONTEND đổi localhost thành 127.0.0.1 example: 127.0.0.1:8000
